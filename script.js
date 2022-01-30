@@ -80,6 +80,16 @@ for (let i = 0; i < numBtnList.length; i++) {
     });  
 }
 
+dotBtn.addEventListener('click', () => {
+    if (currentNumber == null) {
+        currentNumber = '0.'
+        display1.textContent = currentNumber;
+    } else if (!currentNumber.includes('.')){
+        currentNumber += '.';
+        display1.textContent = currentNumber;
+    };
+});
+
 for (let i = 0; i < operBtnList.length; i++) {
     operBtnList[i].addEventListener('click', () => {
         if (pastNumber == null) {
@@ -89,7 +99,7 @@ for (let i = 0; i < operBtnList.length; i++) {
             currentNumber = null;
             display1.textContent = null;
         } else {
-            let result = operate(currentOperator, parseInt(pastNumber), parseInt(currentNumber));
+            let result = operate(currentOperator, parseFloat(pastNumber), parseFloat(currentNumber));
             currentOperator = operBtnList[i].textContent;
             pastNumber = result;
             currentNumber = null;
@@ -101,7 +111,7 @@ for (let i = 0; i < operBtnList.length; i++) {
 
 equalBtn.addEventListener('click', () => {
     if (pastNumber != null) {
-        let result = operate(currentOperator, parseInt(pastNumber), parseInt(currentNumber));
+        let result = operate(currentOperator, parseFloat(pastNumber), parseFloat(currentNumber));
         pastNumber = null;
         currentNumber = result;
         display2.textContent = null;
