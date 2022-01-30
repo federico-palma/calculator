@@ -56,6 +56,9 @@ function operate(operator, a, b) {
             break;
     
         case '/':
+            if (b == 0) {
+                return "Don't divide by 0 you donkey."
+            }
             return divide(a, b);
             break;
     
@@ -67,7 +70,7 @@ function operate(operator, a, b) {
 // Event listener for buttons
 for (let i = 0; i < numBtnList.length; i++) {
     numBtnList[i].addEventListener('click', () => {
-        if (!display1.textContent) {
+        if (!currentNumber) {
             currentNumber = numBtnList[i].textContent;
             display1.textContent = currentNumber; 
         } else {
@@ -77,10 +80,39 @@ for (let i = 0; i < numBtnList.length; i++) {
     });  
 }
 
+for (let i = 0; i < operBtnList.length; i++) {
+    operBtnList[i].addEventListener('click', () => {
+        if (pastNumber == null) {
+            currentOperator = operBtnList[i].textContent;
+            pastNumber = currentNumber;
+            display2.textContent = pastNumber + ' ' + currentOperator;
+            currentNumber = null;
+            display1.textContent = null;
+        } else {
+            let result = operate(currentOperator, parseInt(pastNumber), parseInt(currentNumber));
+            currentOperator = operBtnList[i].textContent;
+            pastNumber = result;
+            currentNumber = null;
+            display2.textContent = result + ' ' + currentOperator;
+            display1.textContent = null;
+        };
+    });
+}
+
+equalBtn.addEventListener('click', () => {
+    if (pastNumber != null) {
+        let result = operate(currentOperator, parseInt(pastNumber), parseInt(currentNumber));
+        pastNumber = null;
+        currentNumber = result;
+        display2.textContent = null;
+        display1.textContent = result;
+    }
+});
+
 clearBtn.addEventListener('click', () => {
-    display1.textContent = undefined;
-    display2.textContent = undefined;
-    currentNumber = undefined;
-    pastNumber = undefined;
-    currentOperator = undefined;
+    display1.textContent = null;
+    display2.textContent = null;
+    currentNumber = null;
+    pastNumber = null;
+    currentOperator = null;
 });
