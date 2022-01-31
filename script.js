@@ -68,15 +68,19 @@ function operate(operator, a, b) {
     }
 }
 
+function updateDisplay1() {
+    display1.textContent = currentNumber;
+}
+
 // Event listener for buttons
 for (let i = 0; i < numBtnList.length; i++) {
     numBtnList[i].addEventListener('click', () => {
         if (!currentNumber) {
             currentNumber = numBtnList[i].textContent;
-            display1.textContent = currentNumber; 
+            updateDisplay1()
         } else {
             currentNumber += numBtnList[i].textContent;
-            display1.textContent = currentNumber;
+            updateDisplay1()
         }
     });  
 }
@@ -84,28 +88,29 @@ for (let i = 0; i < numBtnList.length; i++) {
 dotBtn.addEventListener('click', () => {
     if (currentNumber == null) {
         currentNumber = '0.'
-        display1.textContent = currentNumber;
+        updateDisplay1()
     } else if (!currentNumber.includes('.')){
         currentNumber += '.';
-        display1.textContent = currentNumber;
+        updateDisplay1()
     };
 });
 
 for (let i = 0; i < operBtnList.length; i++) {
     operBtnList[i].addEventListener('click', () => {
+        if (currentNumber == null) {currentNumber = display1.textContent;}
         if (pastNumber == null) {
             currentOperator = operBtnList[i].textContent;
             pastNumber = currentNumber;
-            display2.textContent = pastNumber + ' ' + currentOperator;
             currentNumber = null;
-            display1.textContent = null;
+            updateDisplay1()
+            display2.textContent = pastNumber + ' ' + currentOperator;
         } else {
             let result = operate(currentOperator, parseFloat(pastNumber), parseFloat(currentNumber));
             currentOperator = operBtnList[i].textContent;
             pastNumber = result;
             currentNumber = null;
+            updateDisplay1()
             display2.textContent = result + ' ' + currentOperator;
-            display1.textContent = null;
         };
     });
 };
@@ -114,33 +119,43 @@ equalBtn.addEventListener('click', () => {
     if (pastNumber != null) {
         let result = operate(currentOperator, parseFloat(pastNumber), parseFloat(currentNumber));
         pastNumber = null;
+        display2.textContent = pastNumber
         currentNumber = result;
-        display2.textContent = null;
-        display1.textContent = result;
+        updateDisplay1()
+        currentNumber = null;
     }
 });
 
 clearBtn.addEventListener('click', () => {
-    display1.textContent = null;
-    display2.textContent = null;
     currentNumber = null;
     pastNumber = null;
+    display2.textContent = pastNumber;
     currentOperator = null;
+    updateDisplay1()
 });
 
 backspaceBtn.addEventListener('click', () => {
     if (currentNumber) {
         currentNumber = currentNumber.slice(0, -1);
-        display1.textContent = currentNumber;
+        updateDisplay1()
     }
 });
 
 plusMinus.addEventListener('click', () => {
     if (currentNumber == null || !currentNumber.includes('-')) {
         currentNumber == null ? currentNumber = '-' : currentNumber = '-' + currentNumber;
-        display1.textContent = currentNumber;
+        updateDisplay1()
     } else {
         currentNumber = currentNumber.slice(1);
-        display1.textContent = currentNumber;
+        updateDisplay1()
     }
 });
+
+// window.KeyboardEvent('keydown', (e) => {
+//     if (e.key >= 0 && e.key <= 9) appendNumber(e.key)
+//     if (e.key === '.') appendPoint()
+//     if (e.key === '=' || e.key === 'Enter') evaluate()
+//     if (e.key === 'Backspace') deleteNumber()
+//     if (e.key === 'Escape') clear()
+//     if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/')
+// })
