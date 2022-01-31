@@ -128,6 +128,13 @@ clearBtn.addEventListener('click', () => {
     currentOperator = null;
 });
 
+backspaceBtn.addEventListener('click', () => {
+    if (currentNumber) {
+        currentNumber = currentNumber.slice(0, -1);
+        display1.textContent = currentNumber;
+    }
+});
+
 plusMinus.addEventListener('click', () => {
     if (currentNumber == null || !currentNumber.includes('-')) {
         currentNumber == null ? currentNumber = '-' : currentNumber = '-' + currentNumber;
