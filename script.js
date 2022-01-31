@@ -116,7 +116,7 @@ for (let i = 0; i < operBtnList.length; i++) {
 };
 
 equalBtn.addEventListener('click', () => {
-    if (pastNumber != null) {
+    if (pastNumber != null && currentNumber != null) {
         let result = operate(currentOperator, parseFloat(pastNumber), parseFloat(currentNumber));
         pastNumber = null;
         display2.textContent = pastNumber
@@ -150,12 +150,3 @@ plusMinus.addEventListener('click', () => {
         updateDisplay1()
     }
 });
-
-// window.KeyboardEvent('keydown', (e) => {
-//     if (e.key >= 0 && e.key <= 9) appendNumber(e.key)
-//     if (e.key === '.') appendPoint()
-//     if (e.key === '=' || e.key === 'Enter') evaluate()
-//     if (e.key === 'Backspace') deleteNumber()
-//     if (e.key === 'Escape') clear()
-//     if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/')
-// })
