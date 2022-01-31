@@ -19,6 +19,7 @@ const equalBtn = document.getElementById('equal')
 const dotBtn = document.getElementById('dot')
 const clearBtn = document.getElementById('clear')
 const backspaceBtn = document.getElementById('backspace')
+const plusMinus = document.getElementById('plus/minus')
 
 const display1 = document.getElementById('display-1')
 const display2 = document.getElementById('display-2')
@@ -107,7 +108,7 @@ for (let i = 0; i < operBtnList.length; i++) {
             display1.textContent = null;
         };
     });
-}
+};
 
 equalBtn.addEventListener('click', () => {
     if (pastNumber != null) {
@@ -125,4 +126,14 @@ clearBtn.addEventListener('click', () => {
     currentNumber = null;
     pastNumber = null;
     currentOperator = null;
+});
+
+plusMinus.addEventListener('click', () => {
+    if (currentNumber == null || !currentNumber.includes('-')) {
+        currentNumber == null ? currentNumber = '-' : currentNumber = '-' + currentNumber;
+        display1.textContent = currentNumber;
+    } else {
+        currentNumber = currentNumber.slice(1);
+        display1.textContent = currentNumber;
+    }
 });
